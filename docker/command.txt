@@ -1,0 +1,4 @@
+docker build --network=host --build-arg NVIDIA_DISABLE_REQUIRE=1 -t verl:v1.0 -f Dockerfile.ngc.vllm .
+docker images | grep verl
+docker tag verl:v1.0 fengyao1909/verl:v1.0
+docker push fengyao1909/verl:v1.0

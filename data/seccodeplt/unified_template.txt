@@ -1,0 +1,8 @@
+Coding Problem:
+{}
+{}
+Output Format:
+Generate your code strictly following the format below:
+```python
+YOUR_CODE_HERE
+```

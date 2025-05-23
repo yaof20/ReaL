@@ -1,0 +1,6 @@
+{} More specifically, the details are as follows:
+1. The function name is {}.
+2. The function arguments are {}.
+3. The function return should be {}.
+4. Exception raise: {}.
+5. Some extra context of this function: {}.
