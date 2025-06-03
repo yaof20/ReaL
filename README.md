@@ -1,135 +1,99 @@
-<h1 style="text-align: center;">verl: Volcano Engine Reinforcement Learning for LLM</h1>
+# REAL: Reinforcement rEwards from Automated program anaLysis
 
-verl is a flexible, efficient and production-ready RL training library for large language models (LLMs).
+[![arXiv](https://img.shields.io/badge/arXiv-2505.22704v1-b31b1b.svg)](https://arxiv.org/abs/2505.22704)
 
-verl is the open-source version of **[HybridFlow: A Flexible and Efficient RLHF Framework](https://arxiv.org/abs/2409.19256v2)** paper.
+This repository contains the official implementation of our paper:
 
-verl is flexible and easy to use with:
+> **Training Language Models to Generate Quality Code with Program Analysis Feedback**  
+> Feng Yao*, Zilong Wang*, Liyuan Liu, Junxia Cui, Li Zhong, Xiaohan Fu, Haohui Mai, Vish Krishnan, Jianfeng Gao, Jingbo Shang  
+> (*equal contribution)  
+> [[arXiv]](https://arxiv.org/abs/2505.22704)
 
-- **Easy extension of diverse RL algorithms**: The Hybrid programming model combines the strengths of single-controller and multi-controller paradigms to enable flexible representation and efficient execution of complex Post-Training dataflows. Allowing users to build RL dataflows in a few lines of code.
+## 🔍 Overview
 
-- **Seamless integration of existing LLM infra with modular APIs**: Decouples computation and data dependencies, enabling seamless integration with existing LLM frameworks, such as PyTorch FSDP, Megatron-LM and vLLM. Moreover, users can easily extend to other LLM training and inference frameworks.
+The rise of **[vibe coding](https://en.wikipedia.org/wiki/Vibe_coding)**—a term coined by [Andrej Karpathy](https://x.com/karpathy/status/1886192184808149383?lang=en)—has transformed software development by enabling individuals to generate code through natural language prompts. Tools like **[Cursor](https://www.cursor.com/)**, **[Replit](https://replit.com/)**, and **[ChatGPT](https://chatgpt.com/g/g-CfL5dQPbs-code-generator)** have made this approach accessible, allowing for rapid prototyping and democratizing coding for non-programmers.
 
-- **Flexible device mapping**: Supports various placement of models onto different sets of GPUs for efficient resource utilization and scalability across different cluster sizes.
+However, while vibe coding excels in speed and functionality (e.g., passing unit tests), it often lacks the robustness required for production-level code—leading to critical issues in **security** (e.g., SQL injection) and **maintainability** (e.g., missing type annotations, poor structure).
 
-- Readily integration with popular HuggingFace models
+**REAL** (Reinforcement rEwards from Automated program anaLysis) bridges this gap by integrating **automated program analysis** with **unit test feedback** during training. Unlike prior work focused only on correctness, REAL provides **reference-free**, **prompt-agnostic** rewards that explicitly incentivize the generation of **secure**, **clean**, and **production-quality** code.
 
+> ✨ REAL makes vibe coding not just fast — but **safe**, **secure**, and **reliable**.
 
-verl is fast with:
+### ✅ Key Advantages of REAL in the Vibe Coding Era
 
-- **State-of-the-art throughput**: By seamlessly integrating existing SOTA LLM training and inference frameworks, verl achieves high generation and training throughput.
-
-- **Efficient actor model resharding with 3D-HybridEngine**: Eliminates memory redundancy and significantly reduces communication overhead during transitions between training and generation phases.
+- **Hybrid Reward System**: Combines static analysis (for security and maintainability) with dynamic unit testing (for correctness) to guide LLMs toward high-quality outputs.
+- **Reference-Free Supervision**: No ground-truth labels or hand-crafted rules — models learn directly from automated analysis signals.
+- **Scalability**: Supports LLMs from 0.5B to 7B (e.g., Qwen2.5) and integrates seamlessly with standard RL frameworks like PPO.
+- **Enhanced Safety**: Targets real-world vulnerabilities using detectors for 17+ CWEs, and enforces best practices for long-term maintainability.
 
 <p align="center">
-| <a href="https://verl.readthedocs.io/en/latest/index.html"><b>Documentation</b></a> | <a href="https://arxiv.org/abs/2409.19256v2"><b>Paper</b></a> | <a href="https://join.slack.com/t/verlgroup/shared_invite/zt-2w5p9o4c3-yy0x2Q56s_VlGLsJ93A6vA"><b>Slack</b></a> | <a href="https://raw.githubusercontent.com/eric-haibin-lin/verl-community/refs/heads/main/WeChat.JPG"><b>Wechat</b></a> | <a href="https://x.com/verl_project"><b>Twitter</b></a>
-
-<!-- <a href=""><b>Slides</b></a> | -->
+  <img src="assets/real_framework.png" width="700" alt="REAL Framework Diagram"/>
 </p>
 
-## News
+We evaluate REAL on three enhanced benchmarks:
+- **SafeSQL**: Realistic tasks designed to catch SQL injection flaws.
+- **SecCodePLT+**: Code generation tasks with rich CWE coverage.
+- **APPS+**: Classic algorithmic challenges augmented with static maintainability checks.
 
-- [2025/2] We will present verl in the [Bytedance/NVIDIA/Anyscale Ray Meetup](https://lu.ma/ji7atxux) in bay area on Feb 13th. Come join us in person!
-- [2025/1] [Doubao-1.5-pro](https://team.doubao.com/zh/special/doubao_1_5_pro) is released with SOTA-level performance on LLM & VLM. The RL scaling preview model is trained using verl, reaching OpenAI O1-level performance on math benchmarks (70.0 pass@1 on AIME).
-- [2024/12] The team presented <a href="https://neurips.cc/Expo/Conferences/2024/workshop/100677">Post-training LLMs: From Algorithms to Infrastructure</a> at NeurIPS 2024. [Slides](https://github.com/eric-haibin-lin/verl-data/tree/neurips) and [video](https://neurips.cc/Expo/Conferences/2024/workshop/100677) available.
-- [2024/10] verl is presented at Ray Summit. [Youtube video](https://www.youtube.com/watch?v=MrhMcXkXvJU&list=PLzTswPQNepXntmT8jr9WaNfqQ60QwW7-U&index=37) available.
-- [2024/08] HybridFlow (verl) is accepted to EuroSys 2025.
+Across all settings, REAL consistently outperforms state-of-the-art baselines—enabling LLMs to write code that’s not just functional, but **secure by design and production-ready**.
 
-## Key Features
 
-- **FSDP** and **Megatron-LM** for training.
-- **vLLM** and **TGI** for rollout generation, **SGLang** support coming soon.
-- huggingface models support
-- Supervised fine-tuning
-- Reinforcement learning from human feedback with [PPO](https://github.com/volcengine/verl/tree/main/examples/ppo_trainer), [GRPO](https://github.com/volcengine/verl/tree/main/examples/grpo_trainer), and [ReMax](https://github.com/volcengine/verl/tree/main/examples/remax_trainer)
-  - Support model-based reward and function-based reward (verifiable reward)
-- flash-attention, [sequence packing](examples/ppo_trainer/run_qwen2-7b_seq_balance.sh), [long context](examples/ppo_trainer/run_deepseek7b_llm_sp2.sh) support via DeepSpeed Ulysses, [LoRA](examples/sft/gsm8k/run_qwen_05_peft.sh), [Liger-kernel](examples/sft/gsm8k/run_qwen_05_sp2_liger.sh)
-- scales up to 70B models and hundreds of GPUs
-- experiment tracking with wandb, swanlab and mlflow
+## 🚀 Key Components
 
-## Upcoming Features
-- Reward model training
-- DPO training
-- DeepSeek integration with Megatron backend
-- SGLang integration
+- **Automated Feedback**: Leverages static program analysis (for security and maintainability) and dynamic unit testing (for correctness).
+- **Reference-Free Training**: Reinforcement learning with hybrid rewards — no need for case-by-case human-labeled data for safety and security requirement.
+- **Robust Evaluation Benchmarks**:
+  - 🧪 **SafeSQL** – realistic SQL tasks with injection vulnerabilities.
+  - 🔐 **SecCodePLT+** – security benchmark enhanced with 17+ CWE detectors.
+  - 🔧 **APPS+** – maintainability-focused version of the APPS dataset with static analysis checks.
+- **Scalable RL Setup**: Trained with PPO on Qwen2.5 models (0.5B–7B), using the [VeRL framework](https://github.com/volcengine/verl).
 
-## Getting Started
+---
+## 🛠️ Setup
 
-Checkout this [Jupyter Notebook](https://github.com/volcengine/verl/tree/main/examples/ppo_trainer/verl_getting_started.ipynb) to get started with PPO training with a single 24GB L4 GPU (**FREE** GPU quota provided by [Lighting Studio](https://lightning.ai/hlin-verl/studios/verl-getting-started))!
+### 1. Clone the repository
 
-**Quickstart:**
-- [Installation](https://verl.readthedocs.io/en/latest/start/install.html)
-- [Quickstart](https://verl.readthedocs.io/en/latest/start/quickstart.html)
-- [Programming Guide](https://verl.readthedocs.io/en/latest/hybrid_flow.html)
-
-**Running a PPO example step-by-step:**
-- Data and Reward Preparation
-  - [Prepare Data for Post-Training](https://verl.readthedocs.io/en/latest/preparation/prepare_data.html)
-  - [Implement Reward Function for Dataset](https://verl.readthedocs.io/en/latest/preparation/reward_function.html)
-- Understanding the PPO Example
-  - [PPO Example Architecture](https://verl.readthedocs.io/en/latest/examples/ppo_code_architecture.html)
-  - [Config Explanation](https://verl.readthedocs.io/en/latest/examples/config.html)
-  - [Run GSM8K Example](https://verl.readthedocs.io/en/latest/examples/gsm8k_example.html)
-
-**Reproducible algorithm baselines:**
-- [PPO and GRPO](https://verl.readthedocs.io/en/latest/experiment/ppo.html)
-
-**For code explanation and advance usage (extension):**
-- PPO Trainer and Workers
-  - [PPO Ray Trainer](https://verl.readthedocs.io/en/latest/workers/ray_trainer.html)
-  - [PyTorch FSDP Backend](https://verl.readthedocs.io/en/latest/workers/fsdp_workers.html)
-  - [Megatron-LM Backend](https://verl.readthedocs.io/en/latest/index.html)
-- Advance Usage and Extension
-  - [Ray API design tutorial](https://verl.readthedocs.io/en/latest/advance/placement.html)
-  - [Extend to Other RL(HF) algorithms](https://verl.readthedocs.io/en/latest/advance/dpo_extension.html)
-  - [Add Models with the FSDP Backend](https://verl.readthedocs.io/en/latest/advance/fsdp_extension.html)
-  - [Add Models with the Megatron-LM Backend](https://verl.readthedocs.io/en/latest/advance/megatron_extension.html)
-  - [Deployment using Separate GPU Resources](https://github.com/volcengine/verl/tree/main/examples/split_placement)
-
-## Performance Tuning Guide
-The performance is essential for on-policy RL algorithm. We write a detailed performance tuning guide to allow people tune the performance. See [here](https://verl.readthedocs.io/en/latest/perf/perf_tuning.html) for more details.
-
-## vLLM v0.7 testing version
-We have released a testing version of veRL that supports vLLM>=0.7.0. Please refer to [this document](https://github.com/volcengine/verl/docs/README_vllm0.7.md) for installation guide and more information.
-
-## Contribution Guide
-Contributions from the community are welcome!
-
-### Code formatting
-We use yapf (Google style) to enforce strict code formatting when reviewing PRs. To reformat you code locally, make sure you installed **latest** `yapf`
 ```bash
-pip3 install yapf --upgrade
-```
-Then, make sure you are at top level of verl repo and run
-```bash
-bash scripts/format.sh
+git clone https://github.com/yaof20/ReaL.git  
+cd ReaL
 ```
 
-## Citation and acknowledgement
+### 2. Create environment
 
-If you find the project helpful, please cite:
-- [HybridFlow: A Flexible and Efficient RLHF Framework](https://arxiv.org/abs/2409.19256v2)
-- [A Framework for Training Large Language Models for Code Generation via Proximal Policy Optimization](https://i.cs.hku.hk/~cwu/papers/gmsheng-NL2Code24.pdf)
+We provide a conda environment file for easy setup:
 
-```tex
-@article{sheng2024hybridflow,
-  title   = {HybridFlow: A Flexible and Efficient RLHF Framework},
-  author  = {Guangming Sheng and Chi Zhang and Zilingfeng Ye and Xibin Wu and Wang Zhang and Ru Zhang and Yanghua Peng and Haibin Lin and Chuan Wu},
-  year    = {2024},
-  journal = {arXiv preprint arXiv: 2409.19256}
+```TODO: fengyao```
+
+### 3. Run experiments
+
+#### SecCodePLT+
+
+
+#### SafeSQL & APPS+
+
+
+---
+
+## 📜 Citation
+
+If you find this work useful, please cite:
+
+```bibtex
+@misc{yao2025real,
+  title={Training Language Models to Generate Quality Code with Program Analysis Feedback},
+  author={Feng Yao and Zilong Wang and Liyuan Liu and Junxia Cui and Li Zhong and Xiaohan Fu and Haohui Mai and Vish Krishnan and Jianfeng Gao and Jingbo Shang},
+  year={2025},
+  eprint={2505.22704},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL}
 }
 ```
 
-verl is inspired by the design of Nemo-Aligner, Deepspeed-chat and OpenRLHF. The project is adopted and supported by Anyscale, Bytedance, LMSys.org, Shanghai AI Lab, Tsinghua University, UC Berkeley, UCLA, UIUC, and University of Hong Kong.
 
-## Awesome work using verl
-- [Enhancing Multi-Step Reasoning Abilities of Language Models through Direct Q-Function Optimization](https://arxiv.org/abs/2410.09302)
-- [Flaming-hot Initiation with Regular Execution Sampling for Large Language Models](https://arxiv.org/abs/2410.21236)
-- [Process Reinforcement Through Implicit Rewards](https://github.com/PRIME-RL/PRIME/)
-- [TinyZero](https://github.com/Jiayi-Pan/TinyZero): a reproduction of DeepSeek R1 Zero recipe for reasoning tasks
-- [RAGEN](https://github.com/ZihanWang314/ragen): a general-purpose reasoning agent training framework
-- [Logic R1](https://github.com/Unakar/Logic-RL): a reproduced DeepSeek R1 Zero on 2K Tiny Logic Puzzle Dataset.
-- [deepscaler](https://github.com/agentica-project/deepscaler): iterative context scaling with GRPO
-- [critic-rl](https://github.com/HKUNLP/critic-rl): Teaching Language Models to Critique via Reinforcement Learning
+---
 
-We are HIRING! Send us an [email](mailto:haibin.lin@bytedance.com) if you are interested in internship/FTE opportunities in MLSys/LLM reasoning/multimodal alignment.
+## 📬 Contact
+
+For questions or contributions, feel free to open an issue or reach out to  
+📧 [zlwang@ucsd.edu](mailto:zlwang@ucsd.edu)  
+📧 [fengyao@ucsd.edu](mailto:fengyao@ucsd.edu)
