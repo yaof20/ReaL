@@ -35,7 +35,7 @@ We evaluate REAL on three enhanced benchmarks:
 - **SecCodePLT+**: Code generation tasks with rich CWE coverage.
 - **APPS+**: Classic algorithmic challenges augmented with static maintainability checks.
 
-Across all settings, REAL consistently outperforms state-of-the-art baselines—enabling LLMs to write code that’s not just functional, but **secure by design and production-ready**.
+Across all settings, REAL consistently outperforms state-of-the-art baselines—enabling LLMs to write code that’s not just functional, but **secure and reliable by design**.
 
 
 ## 🚀 Key Components
@@ -69,7 +69,40 @@ We provide a conda environment file for easy setup, or alternatively, you can us
 
 #### SafeSQL & APPS+
 
+##### 1. Training
 
+Run the training script for your target dataset and model size:
+
+```bash
+# For APPS+  
+bash run/apps-code/hybrid-[0.5b|3b|7b].sh
+
+# For SafeSQL  
+bash run/safesql/hybrid-[0.5b|3b|7b].sh
+```
+
+> Checkpoints will be automatically saved to:  
+> `checkpoints/[proj_name]/[exp_name]`
+
+##### 2. Evaluation
+
+Execute the evaluation pipeline after training:
+
+```bash
+# For APPS+
+bash experiments/safesql_and_apps/apps_eval_main.sh [path_to_exp_dir] [sharded|single]
+
+# For SafeSQL
+bash experiments/safesql_and_apps/safesql_eval_main.sh [path_to_exp_dir] [sharded|single]
+```
+
+- Replace <code>[path_to_exp_dir]</code> with your checkpoint directory.
+- Set the mode as <code>sharded</code> or <code>single</code> depending on whether your outputs are split across GPUs.
+
+> ✅ The evaluation pipeline handles:
+> - Checkpoint formatting  
+> - Response generation  
+> - End-to-end quality + functionality assessment
 ---
 
 ## 📜 Citation
