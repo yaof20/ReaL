@@ -12,7 +12,7 @@ pip install --no-cache-dir \
     fire
 
 echo "📦 Installing system dependencies..."
-apt-get update && apt-get install -y tzdata && apt-get clean
+# apt-get update && apt-get install -y tzdata && apt-get clean
 
 # Get the absolute path of the project directory
 echo "🔧 Setting up project environment..."

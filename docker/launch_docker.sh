@@ -6,7 +6,7 @@ set -e
 
 # Get the absolute path of the project directory
 project_dir=$(realpath "$(dirname "$(pwd)")")
-docker_image="fengyao1909/verl:v1.0"
+docker_image="fengyao1909/real:v1.0"
 
 echo "🚀 Launching Docker container..."
 echo "📦 Using Docker image: ${docker_image}"
@@ -21,6 +21,6 @@ docker run \
     --ipc=host \
     --ulimit memlock=-1 \
     --ulimit stack=67108864 \
-    -v "${project_dir}:/workspace/real" \
+    -v "${project_dir}/:/workspace" \
     -e NCCL_P2P_LEVEL=NVL \
     -it "${docker_image}"
