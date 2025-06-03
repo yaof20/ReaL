@@ -7,7 +7,7 @@
   <a href="https://arxiv.org/abs/2505.22704"><img src="https://img.shields.io/badge/arXiv-2505.22704-red"></a>
 </p>  
 <p align="center"> 
-ReaL is a <strong>reinforcement learning</strong> framework that integrates automated <strong>program analysis</strong> techniques to train LLMs to generate secure, maintainable, and production-quality code.
+ReaL is a <strong>reinforcement learning</strong> framework implemented on <a href="https://github.com/volcengine/verl">VeRL</a> that integrates automated <strong>program analysis</strong> techniques to train language models to generate secure, maintainable, and production-quality code.
 </p>
 
 ---
