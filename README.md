@@ -116,7 +116,7 @@ Execute the evaluation pipeline after training:
 
 ```bash
 # For SecCodePLT+
-bash experiments/safesql_and_apps/apps_eval_main.sh
+bash experiments/seccodeplt/seccodeplt_eval_main.sh
 
 # For APPS+
 bash experiments/safesql_and_apps/apps_eval_main.sh [path_to_exp_dir] [sharded|single]
