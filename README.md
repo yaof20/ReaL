@@ -60,9 +60,7 @@ cd ReaL
 
 ### 2. Create environment
 
-We provide a conda environment file for easy setup:
-
-```TODO: fengyao```
+We provide a conda environment file for easy setup, or alternatively, you can use Docker for a containerized environment.
 
 ### 3. Run experiments
 
@@ -88,7 +86,6 @@ If you find this work useful, please cite:
   primaryClass={cs.CL}
 }
 ```
-
 
 ---
 
