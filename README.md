@@ -14,10 +14,17 @@ ReaL is a <strong>reinforcement learning</strong> framework implemented on <a hr
 
 ## 📋 Contents
 
+- [� Contents](#-contents)
 - [🔍 Overview](#-overview)
+  - [✅ Key Advantages](#-key-advantages)
 - [🚀 Key Components](#-key-components)
 - [⚡ Quick Start](#-quick-start)
 - [🛠️ Full Setup](#️-full-setup)
+  - [1. Environment Setup](#1-environment-setup)
+    - [Option A: Docker (Recommended)](#option-a-docker-recommended)
+    - [Option B: Conda Environment](#option-b-conda-environment)
+  - [2. Training](#2-training)
+  - [3. Evaluation](#3-evaluation)
 - [📊 Results](#-results)
 - [📜 Citation](#-citation)
 - [📬 Contact](#-contact)
@@ -135,6 +142,10 @@ We evaluate ReaL on three enhanced benchmarks:
 - **SafeSQL**: Realistic tasks designed to catch SQL injection flaws
 - **SecCodePLT+**: Code generation tasks with rich CWE coverage  
 - **APPS+**: Classic algorithmic challenges augmented with static maintainability checks
+
+<p align="center">
+  <img src="assets/result.png" width="600" alt="ReaL Results"/>
+</p>
 
 <p align="center">
   <img src="assets/result.jpg" width="600" alt="ReaL Results"/>
