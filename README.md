@@ -14,7 +14,7 @@ ReaL is a <strong>reinforcement learning</strong> framework implemented on <a hr
 
 ## 📋 Contents
 
-- [� Contents](#-contents)
+- [📋 Contents](#-contents)
 - [🔍 Overview](#-overview)
   - [✅ Key Advantages](#-key-advantages)
 - [🚀 Key Components](#-key-components)
@@ -139,9 +139,10 @@ bash experiments/safesql_and_apps/safesql_eval_main.sh [path_to_exp_dir] [sharde
 ## 📊 Results
 
 We evaluate ReaL on three enhanced benchmarks:
-- **SafeSQL**: Realistic tasks designed to catch SQL injection flaws
-- **SecCodePLT+**: Code generation tasks with rich CWE coverage  
-- **APPS+**: Classic algorithmic challenges augmented with static maintainability checks
+- **SafeSQL**: Realistic tasks designed to catch SQL injection flaws 🤗 [Hugging Face](https://huggingface.co/datasets/fengyao1909/SafeSQL)
+- **SecCodePLT+**: Code generation tasks with rich CWE coverage 🤗 [Hugging Face](https://huggingface.co/datasets/fengyao1909/SecCodePLT_Plus)
+- **APPS+**: Classic algorithmic challenges augmented with static maintainability checks 🤗 [Hugging Face](https://huggingface.co/datasets/fengyao1909/APPS_Plus)
+
 
 <p align="center">
   <img src="assets/result.png" width="600" alt="ReaL Results"/>
