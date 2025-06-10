@@ -1,15 +1,13 @@
 # PromSec: Prompt Optimization for Secure Generation of Functional Source Code with Large Language Models (LLMs)
 
-## Added by Real 
-
-## Setup
+## Setup (Added by ReaL)
 
 - Follow the setup guide of the official promsec repo as below.
 
 - Prepare the code you want to process in promsec with `.py` format. 
 (Examples provided in /sql0.5b, /sql3b and /sql7b)
 
-## Usage
+## Usage (Added by ReaL)
 
 Here is an example command to run promsec.
 
